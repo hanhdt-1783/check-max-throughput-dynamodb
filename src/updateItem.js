@@ -1,19 +1,18 @@
 const AWS = require("aws-sdk");
-AWS.config.update({ region: "ap-southeast-2" });
-const docClient = new AWS.DynamoDB.DocumentClient();
+AWS.config.update({ region: "ap-northeast-1" });
+const docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: "latest" });
 
 let promiseArray = [];
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 2000; i++) {
   const params = {
-    TableName: "Music",
+    TableName: "dev-svn-test-max-throughput",
     Key: {
-      Artist: "HuongTram",
-      SongTitle: "EmGaiMua",
+      itemId: "item-1",
     },
-    UpdateExpression: "set Category = :category",
+    UpdateExpression: "set itemCount = :itemCount",
     ExpressionAttributeValues: {
-      ":category": `Category-${i}`,
+      ":itemCount": i,
     },
     ReturnValues: "ALL_NEW",
   };
@@ -21,6 +20,10 @@ for (let i = 0; i < 20; i++) {
   promiseArray.push(promise);
 }
 
-Promise.all(promiseArray).then(() => {
-  console.log("---> DONE");
-});
+Promise.all(promiseArray)
+  .then(() => {
+    console.log("---> DONE");
+  })
+  .catch((error) => {
+    console.error("---> ERROR", error.message);
+  });

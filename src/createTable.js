@@ -1,29 +1,21 @@
 const AWS = require("aws-sdk");
-AWS.config.update({ region: "ap-southeast-2" });
-const ddb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+AWS.config.update({ region: "ap-northeast-1" });
+const ddb = new AWS.DynamoDB({ apiVersion: "latest" });
 
 const params = {
   AttributeDefinitions: [
     {
-      AttributeName: "Artist",
-      AttributeType: "S",
-    },
-    {
-      AttributeName: "SongTitle",
+      AttributeName: "itemId",
       AttributeType: "S",
     },
   ],
   KeySchema: [
     {
-      AttributeName: "Artist",
+      AttributeName: "itemId",
       KeyType: "HASH",
-    },
-    {
-      AttributeName: "SongTitle",
-      KeyType: "RANGE",
-    },
+    }
   ],
-  TableName: "Music",
+  TableName: "dev-svn-test-max-throughput",
   BillingMode: "PAY_PER_REQUEST",
 };
 

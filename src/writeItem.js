@@ -1,13 +1,12 @@
 const AWS = require("aws-sdk");
-AWS.config.update({ region: "ap-southeast-2" });
-const docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
+AWS.config.update({ region: "ap-northeast-1" });
+const docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: "latest" });
 
 const params = {
-  TableName: "Music",
+  TableName: "dev-svn-test-max-throughput",
   Item: {
-    Artist: "HuongTram",
-    SongTitle: "EmGaiMua",
-    Category: "Ballad",
+    itemId: "item-1",
+    itemCount: 1
   },
 };
 
